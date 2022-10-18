@@ -3,10 +3,10 @@ package agh.isc.oop;
 import static agh.isc.oop.Direction.*;
 
 public class World {
-    public static void main(String[] args){
+    public static void main(String [] args){
     System.out.println ("system rozpoczął działanie");
-    Direction [] tablica = {f, f, f, r, l, r};
-    run(tablica);
+    //Direction [] tablica = {f, f, f, r, l, r};
+    //run();
     System.out.println ("System zakończył działanie");
     }
     public static void run(Direction [] args) {
