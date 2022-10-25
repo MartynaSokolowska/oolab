@@ -1,12 +1,14 @@
 package agh.isc.oop;
 
-import static agh.isc.oop.Direction.*;
-
 public class World {
     public static void main(String [] args){
     System.out.println ("system rozpoczął działanie");
-    //Direction [] tablica = {f, f, f, r, l, r};
-    //run();
+    Animal Reksio = new Animal();
+    System.out.println(Reksio);
+    String[] tabruchu ={"f","left","f","f","r","r","b"};
+    OptionParser tablicaMoveDirection = new OptionParser(tabruchu);
+    goReksio(tablicaMoveDirection,Reksio);
+    System.out.println(Reksio);
     System.out.println ("System zakończył działanie");
     }
     public static void run(Direction [] args) {
@@ -19,6 +21,13 @@ public class World {
                 case l -> "zwierzak skreca w lewo";
             };
             System.out.println(message);
+        }
+    }
+    public static void goReksio(OptionParser tablicakrokow ,Animal zwierzak){
+        MoveDirection[] tablicakieronkow =tablicakrokow.parse();
+        for (MoveDirection direction : tablicakieronkow) {
+            if (direction == MoveDirection.BACKWARD || direction == MoveDirection.LEFT || direction == MoveDirection.FORWARD || direction == MoveDirection.RIGHT)
+                zwierzak.move(direction);
         }
     }
 }

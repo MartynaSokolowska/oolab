@@ -12,16 +12,10 @@ public class Vector2d  {
     }
 
     boolean precedes(Vector2d other){
-        if (this.x<=other.x && this.y<=other.y){
-            return true;
-        }
-        return false;
+        return this.x <= other.x && this.y <= other.y;
     }
     boolean follows(Vector2d other){
-        if (this.x>=other.x && this.y>=other.y){
-            return true;
-        }
-        return false;
+        return this.x >= other.x && this.y >= other.y;
     }
     Vector2d upperRight(Vector2d other) {
         int wynikx;
@@ -52,14 +46,10 @@ public class Vector2d  {
     public boolean equals(Object other) {
         if (this == other)
             return true;
-        if (!(other instanceof Vector2d))
+        if (!(other instanceof Vector2d that))
             return false;
-        Vector2d that = (Vector2d) other;
 
-        if (this.x==that.x & this.y==that.y)
-            return true;
-
-        return false;
+        return this.x == that.x & this.y == that.y;
 // tutaj przeprowadzane jest faktyczne porównanie
     }
     Vector2d opposite(){
