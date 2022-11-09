@@ -1,8 +1,9 @@
-package agh.isc.oop;
+package agh.ics.oop;
 
+import agh.ics.oop.MapDirection;
 import org.junit.jupiter.api.Test;
 
-import static agh.isc.oop.MapDirection.*;
+import static agh.ics.oop.MapDirection.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MapDirectionTest {
