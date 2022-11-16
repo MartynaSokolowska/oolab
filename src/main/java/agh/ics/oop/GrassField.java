@@ -44,7 +44,7 @@ public class GrassField extends AbstractWorldMap {
         boolean b=super.isOccupied(position);
         if(b){return true;}
         for (Grass grass : grasses) {
-            if (grass.position.equals(position))
+            if (grass.getPosition().equals(position))
                 return true;
         }
         return false;
@@ -56,7 +56,7 @@ public class GrassField extends AbstractWorldMap {
                 return animal;
         }
         for (Grass grass: grasses) {
-            if (grass.position.equals(position))
+            if (grass.getPosition().equals(position))
                 return grass;
         }
         return null;
