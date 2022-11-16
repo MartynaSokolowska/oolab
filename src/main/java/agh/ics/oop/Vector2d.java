@@ -1,8 +1,8 @@
 package agh.ics.oop;
 
 public class Vector2d  {
-    public final int x;
-    public final int y;
+    int x;
+    int y;
     public Vector2d(int x, int y) {
         this.x=x;
         this.y=y;
@@ -53,7 +53,7 @@ public class Vector2d  {
 // tutaj przeprowadzane jest faktyczne porównanie
     }
     Vector2d opposite(){
-        return new Vector2d(this.y,this.x);
+        return new Vector2d(this.x*(-1),this.y*(-1));
     }
     public static void main(String [] args){
         Vector2d position1 = new Vector2d(1,2);
