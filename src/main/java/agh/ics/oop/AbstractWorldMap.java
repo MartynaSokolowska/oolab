@@ -1,15 +1,16 @@
 
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 abstract class AbstractWorldMap implements IWorldMap {
     protected int lowerendx;
     protected int lowerendy;
     protected int height;
     protected int width;
-    protected static List<Animal> animals = new ArrayList<>();
+    static Map<Vector2d, Animal> animals = new HashMap<>();
+
     @Override
     public boolean canMoveTo(Vector2d position) {
         return !this.isOccupied(position);
@@ -18,29 +19,27 @@ abstract class AbstractWorldMap implements IWorldMap {
     @Override
     public boolean place(Animal animal) {
         if (canMoveTo(animal.position)) {
-            animals.add(animal);
+            animals.put(animal.position,animal);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("vector " + animal.position + " is already occupied or cannot be used.");
+
     }
     @Override
     public boolean isOccupied(Vector2d position) {
-        for (Animal animal: animals) {
-            if (animal.position.equals(position))
-                return true;
-        }
-        return false;
+            return animals.get(position) != null;
     }
     @Override
     public Object objectAt(Vector2d position){
-        for (Animal animal: animals) {
-            if (animal.position.equals(position))
-                return animal;
-        }
-        return null;
+        return animals.get(position);
     }
     public String toString() {
         return new MapVisualiser(this).draw(new Vector2d(lowerendx, lowerendy), new Vector2d(width,height));
+    }
+    void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        Animal animal=animals.get(oldPosition);
+        animals.remove(oldPosition);
+        animals.put(newPosition,animal);
     }
 
 }

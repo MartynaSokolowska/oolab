@@ -22,15 +22,25 @@ class GrassFieldTest {
     @Test
     void place() {
         //given
+        String result = "";
         IWorldMap map = new GrassField(10);
-        Animal animal1=new Animal(map,new Vector2d(2,1));
-        Animal animal2=new Animal(map,new Vector2d(2,1));
-        //when
-        boolean result1=map.place(animal1);
-        boolean result2=map.place(animal2);
+        Animal animal2;
+        Animal animal1;
+        boolean result1 = false;
+        boolean result2 = false;
+        try {
+            animal1 = new Animal(map, new Vector2d(2, 1));
+            animal2 = new Animal(map, new Vector2d(2, 1));
+            //when
+            result1 = map.place(animal1);
+            result2 = map.place(animal2);
+        } catch (IllegalArgumentException ex) {
+            result = String.valueOf(ex);
+        }
         //then
         assertTrue(result1);
         assertFalse(result2);
+        assertEquals("java.lang.IllegalArgumentException: vector (2,1) is already occupied or cannot be used.", result);
     }
 
     @Test

@@ -11,7 +11,7 @@ class SimulationEngineTest {
     void run() {
         //given
         String [] arguments={"f", "b", "r" ,"l" };
-        MoveDirection[] directions = new OptionParser(arguments).parse();
+        MoveDirection[] directions = new OptionParser().parse(arguments);
         IWorldMap map = new RectangularMap(10, 5);
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
         IEngine engine = new SimulationEngine(directions, map, positions);

@@ -1,14 +1,13 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Math.*;
 import static java.util.Collections.shuffle;
 
 public class GrassField extends AbstractWorldMap {
 
-    static final List<Grass> grasses = new ArrayList<>();
+    static Map<Vector2d, Grass> grasses = new HashMap<>();
     public GrassField (int n){
 
         List<Vector2d> GrassPlacements = new ArrayList<>();
@@ -23,7 +22,7 @@ public class GrassField extends AbstractWorldMap {
         lowerendy=GrassPlacements.get(0).y;
         height=GrassPlacements.get(0).y;
         for (int i = 0; i < n; i++) {
-            grasses.add(new Grass(GrassPlacements.get(i)));
+            grasses.put(GrassPlacements.get(i),new Grass(GrassPlacements.get(i)));
             lowerendx=min(GrassPlacements.get(i).x,lowerendx);
             lowerendy=min(GrassPlacements.get(i).y,lowerendy);
             width=max(GrassPlacements.get(i).x,width);
@@ -33,38 +32,32 @@ public class GrassField extends AbstractWorldMap {
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
-        for (Animal animal: animals) {
-            if (animal.position.equals(position))
-                return false;
-        }
-        return true;
+        return !super.isOccupied(position);
     }
     @Override
     public boolean isOccupied(Vector2d position) {
         boolean b=super.isOccupied(position);
         if(b){return true;}
-        for (Grass grass : grasses) {
-            if (grass.getPosition().equals(position))
+        Object value=grasses.get(position);
+        if (value!=null){
                 return true;
         }
         return false;
     }
     @Override
     public Object objectAt(Vector2d position){
-        for (Animal animal: animals) {
-            if (animal.position.equals(position))
-                return animal;
+        Object value=animals.get(position);
+        if (value!=null){
+            return value;
         }
-        for (Grass grass: grasses) {
-            if (grass.getPosition().equals(position))
-                return grass;
-        }
-        return null;
+        value=grasses.get(position);
+        return value;
     }
 
     @Override
     public String toString() {
-        for (Animal animal: animals) {
+
+        for (Animal animal:animals.values()) {
             lowerendx=min(animal.position.x,lowerendx);
             lowerendy=min(animal.position.y,lowerendy);
             width=max(animal.position.x,width);

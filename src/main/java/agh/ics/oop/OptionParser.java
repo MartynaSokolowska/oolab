@@ -1,14 +1,9 @@
 package agh.ics.oop;
 
 public class OptionParser {
-    private final String[] tablica;
 
-    public OptionParser(String[] tab) {
-        this.tablica = tab;
-    }
+    public MoveDirection[] parse(String[] arguments) {
 
-    public MoveDirection[] parse() {
-        String[] arguments = this.tablica;
         int i = 0;
         MoveDirection[] tablicakierunkow = new MoveDirection[arguments.length];
         for (String arg : arguments) {
@@ -30,8 +25,9 @@ public class OptionParser {
             if (arg.equals("l") || arg.equals("left")) {
                 tablicakierunkow[i] = MoveDirection.LEFT;
                 i += 1;
+                continue;
             }
-
+            throw new IllegalArgumentException(arg + " is not legal move specification");
 
         }
         return tablicakierunkow;
