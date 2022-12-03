@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 abstract class AbstractWorldMap implements IWorldMap {
-    protected int lowerendx;
-    protected int lowerendy;
-    protected int height;
-    protected int width;
     static Map<Vector2d, Animal> animals = new HashMap<>();
 
     @Override
@@ -34,9 +30,9 @@ abstract class AbstractWorldMap implements IWorldMap {
         return animals.get(position);
     }
     public String toString() {
-        return new MapVisualiser(this).draw(new Vector2d(lowerendx, lowerendy), new Vector2d(width,height));
+        return new MapVisualiser(this).draw(new Vector2d(boundaries.lowerendx, boundaries.lowerendy), new Vector2d(boundaries.width,boundaries.height));
     }
-    void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+    void positionChanged(Vector2d oldPosition, Vector2d newPosition,IWorldMap map){
         Animal animal=animals.get(oldPosition);
         animals.remove(oldPosition);
         animals.put(newPosition,animal);

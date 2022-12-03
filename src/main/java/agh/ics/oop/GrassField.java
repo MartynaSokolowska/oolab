@@ -8,25 +8,25 @@ import static java.util.Collections.shuffle;
 public class GrassField extends AbstractWorldMap {
 
     static Map<Vector2d, Grass> grasses = new HashMap<>();
+
     public GrassField (int n){
 
         List<Vector2d> GrassPlacements = new ArrayList<>();
+
         for (int i = 0; i < sqrt(n * 10); i++) {
             for (int j = 0; j < sqrt(n * 10); j++) {
                 GrassPlacements.add(new Vector2d(i, j));
             }
         }
         shuffle(GrassPlacements);
-        lowerendx=GrassPlacements.get(0).x;
-        width=GrassPlacements.get(0).x;
-        lowerendy=GrassPlacements.get(0).y;
-        height=GrassPlacements.get(0).y;
+        boundaries.lowerendx=GrassPlacements.get(0).x;
+        boundaries.lowerendy=GrassPlacements.get(0).y;
+        boundaries.height=GrassPlacements.get(0).y;
+        boundaries.width=GrassPlacements.get(0).x;
+
         for (int i = 0; i < n; i++) {
             grasses.put(GrassPlacements.get(i),new Grass(GrassPlacements.get(i)));
-            lowerendx=min(GrassPlacements.get(i).x,lowerendx);
-            lowerendy=min(GrassPlacements.get(i).y,lowerendy);
-            width=max(GrassPlacements.get(i).x,width);
-            height=max(GrassPlacements.get(i).y,height);
+            boundaries.positionChanged(new Vector2d(0,0),GrassPlacements.get(i),this);
         }
 
     }
@@ -39,10 +39,7 @@ public class GrassField extends AbstractWorldMap {
         boolean b=super.isOccupied(position);
         if(b){return true;}
         Object value=grasses.get(position);
-        if (value!=null){
-                return true;
-        }
-        return false;
+        return value != null;
     }
     @Override
     public Object objectAt(Vector2d position){
@@ -54,15 +51,4 @@ public class GrassField extends AbstractWorldMap {
         return value;
     }
 
-    @Override
-    public String toString() {
-
-        for (Animal animal:animals.values()) {
-            lowerendx=min(animal.position.x,lowerendx);
-            lowerendy=min(animal.position.y,lowerendy);
-            width=max(animal.position.x,width);
-            height=max(animal.position.y,height);
-        }
-        return super.toString();
-    }
 }
