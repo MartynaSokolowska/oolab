@@ -48,7 +48,7 @@ public class Animal {
                 Vector2d pomniejszony = position.subtract(orientacion.toUnitVector());
                 if (this.map.canMoveTo(pomniejszony)) {
                     for (AbstractWorldMap observer:observers){
-                        observer.positionChanged(position,pomniejszony,this.map);
+                        observer.positionChanged(position,pomniejszony);
                     }
                     position = pomniejszony;
 
