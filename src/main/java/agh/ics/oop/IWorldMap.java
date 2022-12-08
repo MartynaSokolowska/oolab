@@ -7,7 +7,7 @@ package agh.ics.oop;
  *
  * @author apohllo
  */
-public interface IWorldMap {
+public interface IWorldMap extends IPositionObserve {
     MapBoundary boundaries=new MapBoundary();
     /**
      * Indicate if any object can move to the given position.

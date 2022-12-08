@@ -5,9 +5,9 @@ import java.util.*;
 import static java.lang.Math.*;
 import static java.util.Collections.shuffle;
 
-public class GrassField extends AbstractWorldMap {
+public class GrassField extends AbstractWorldMap implements IPositionObserve {
 
-    static Map<Vector2d, Grass> grasses = new HashMap<>();
+    static Map<Vector2d, IMapElement> grasses = new HashMap<>();
 
     public GrassField (int n){
 
@@ -25,7 +25,7 @@ public class GrassField extends AbstractWorldMap {
         boundaries.width=GrassPlacements.get(0).x;
 
         for (int i = 0; i < n; i++) {
-            grasses.put(GrassPlacements.get(i),new Grass(GrassPlacements.get(i)));
+            grasses.put(GrassPlacements.get(i),new IMapElement(new Grass(GrassPlacements.get(i))));
             boundaries.positionChanged(new Vector2d(0,0),GrassPlacements.get(i),this);
         }
 
@@ -43,12 +43,17 @@ public class GrassField extends AbstractWorldMap {
     }
     @Override
     public Object objectAt(Vector2d position){
-        Object value=animals.get(position);
+        IMapElement value=animals.get(position);
         if (value!=null){
-            return value;
+            return value.object;
         }
-        value=grasses.get(position);
-        return value;
+        return grasses.get(position).object;
     }
 
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition, IWorldMap map) {
+        IMapElement animal=animals.get(oldPosition);
+        animals.remove(oldPosition);
+        animals.put(newPosition,animal);
+    }
 }

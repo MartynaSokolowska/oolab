@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 abstract class AbstractWorldMap implements IWorldMap {
-    static Map<Vector2d, Animal> animals = new HashMap<>();
+    static Map<Vector2d, IMapElement> animals = new HashMap<>();
 
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -15,7 +15,7 @@ abstract class AbstractWorldMap implements IWorldMap {
     @Override
     public boolean place(Animal animal) {
         if (canMoveTo(animal.position)) {
-            animals.put(animal.position,animal);
+            animals.put(animal.position,new IMapElement(animal));
             return true;
         }
         throw new IllegalArgumentException("vector " + animal.position + " is already occupied or cannot be used.");
@@ -27,15 +27,11 @@ abstract class AbstractWorldMap implements IWorldMap {
     }
     @Override
     public Object objectAt(Vector2d position){
-        return animals.get(position);
+        return animals.get(position).object;
     }
     public String toString() {
         return new MapVisualiser(this).draw(new Vector2d(boundaries.lowerendx, boundaries.lowerendy), new Vector2d(boundaries.width,boundaries.height));
     }
-    void positionChanged(Vector2d oldPosition, Vector2d newPosition,IWorldMap map){
-        Animal animal=animals.get(oldPosition);
-        animals.remove(oldPosition);
-        animals.put(newPosition,animal);
-    }
+
 
 }

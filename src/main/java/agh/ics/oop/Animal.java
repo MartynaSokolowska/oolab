@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animal {
-    private final List<AbstractWorldMap> observers = new ArrayList<>();
+    private final List<IPositionObserve> observers = new ArrayList<>();
     public MapDirection orientacion = MapDirection.NORTH;
     public Vector2d position;
     final private IWorldMap map;
@@ -21,10 +21,12 @@ public class Animal {
             case SOUTH -> "v";
         };
     }
-    void addObserver(AbstractWorldMap observer){
+    void addObserver(IPositionObserve observer){
         observers.add(observer);
     }
-    void removeObserver(AbstractWorldMap observer){
+
+
+    void removeObserver(IPositionObserve observer){
         observers.remove(observer);
     }
     public boolean isAt(Vector2d position) {
@@ -38,7 +40,7 @@ public class Animal {
             case FORWARD -> {
                 Vector2d powiekszony = position.add(orientacion.toUnitVector());
                 if (this.map.canMoveTo(powiekszony)) {
-                    for (AbstractWorldMap observer:observers){
+                    for (IPositionObserve observer:observers){
                         observer.positionChanged(position,powiekszony,this.map);
                     }
                     position = powiekszony;
@@ -47,8 +49,8 @@ public class Animal {
             case BACKWARD -> {
                 Vector2d pomniejszony = position.subtract(orientacion.toUnitVector());
                 if (this.map.canMoveTo(pomniejszony)) {
-                    for (AbstractWorldMap observer:observers){
-                        observer.positionChanged(position,pomniejszony);
+                    for (IPositionObserve observer:observers){
+                        observer.positionChanged(position,pomniejszony,map);
                     }
                     position = pomniejszony;
 

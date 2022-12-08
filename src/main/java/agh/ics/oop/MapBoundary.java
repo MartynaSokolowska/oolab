@@ -1,20 +1,16 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class MapBoundary extends AbstractWorldMap {
+public class MapBoundary implements IPositionObserve {
     protected int lowerendx;
     protected int width;
     protected int lowerendy;
     protected int height;
     protected IWorldMap map;
-    List<Animal> animals = new ArrayList<>();
 
-    void positionChanged(Vector2d oldPosition,Vector2d position,IWorldMap map){
+    public void positionChanged(Vector2d oldPosition, Vector2d position, IWorldMap map){
 
         int flag=0;
         if (lowerendx == oldPosition.x) {

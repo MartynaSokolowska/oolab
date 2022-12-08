@@ -1,12 +1,8 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class RectangularMap extends AbstractWorldMap {
+public class RectangularMap extends AbstractWorldMap implements IPositionObserve {
 
-
-        protected static List<Animal> animals = new ArrayList<>();
 
         public RectangularMap(int width1, int height1) {
 
@@ -25,6 +21,12 @@ public class RectangularMap extends AbstractWorldMap {
             return super.canMoveTo (position) && (boundaries.width >= position.x && boundaries.height >= position.y) && (position.x>=0 && position.y>=0);
         }
 
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition, IWorldMap map) {
+        IMapElement animal=animals.get(oldPosition);
+        animals.remove(oldPosition);
+        animals.put(newPosition,animal);
+    }
 }
 
 
